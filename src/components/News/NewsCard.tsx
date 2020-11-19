@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
 
 import OpenInNew from '@material-ui/icons/OpenInNew';
@@ -13,10 +14,13 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 import { News } from './News';
 
 interface NewsCardProps {
-  news: News;
+  news: News | undefined;
 }
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    overflow: 'visible',
+  },
   media: {
     height: 200,
   },
@@ -26,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   category: {
     textTransform: 'capitalize',
     padding: '0 5px',
+    boxShadow: '0px 4px 9px rgba(180,90,255, 0.35)',
   },
   link: {
     textDecoration: 'none',
@@ -37,35 +42,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
-  const { image, summary, headline, url, category, datetime } = news;
   const classes = useStyles();
 
   return (
     <Box marginTop={3}>
-      <Card elevation={0}>
-        <CardMedia className={classes.media} image={image} title="News Image" />
+      <Card elevation={0} className={classes.card}>
+        {news ? (
+          <CardMedia
+            className={classes.media}
+            image={news.image}
+            title="News Image"
+          />
+        ) : (
+          <Skeleton variant="rect" height={200} animation="wave" />
+        )}
         <CardContent className={classes.content}>
           <Box marginBottom={1}>
-            <Chip
-              color="primary"
-              className={classes.category}
-              label={category}
-              size="small"
-            />
+            {news ? (
+              <Chip
+                color="primary"
+                className={classes.category}
+                label={news.category}
+                size="small"
+              />
+            ) : (
+              <Skeleton animation="wave" height={25} width="15%" />
+            )}
           </Box>
           <Typography gutterBottom variant="h5" component="h2">
-            {headline}
+            {news ? (
+              news.headline
+            ) : (
+              <Skeleton variant="text" animation="wave" height={20} />
+            )}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {summary}
+            {news ? (
+              news?.summary
+            ) : (
+              <>
+                <Skeleton variant="text" animation="wave" height={15} />
+                <Skeleton
+                  variant="text"
+                  animation="wave"
+                  height={15}
+                  width="80%"
+                />
+              </>
+            )}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions}>
-          <a href={url} className={classes.link} target="_blank">
-            <Button size="small" color="primary" startIcon={<OpenInNew />}>
-              See Full Article
-            </Button>
-          </a>
+          {news && (
+            <a href={news?.url} className={classes.link} target="_blank">
+              <Button size="small" color="primary" startIcon={<OpenInNew />}>
+                See Full Article
+              </Button>
+            </a>
+          )}
         </CardActions>
       </Card>
     </Box>
