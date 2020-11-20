@@ -20,6 +20,9 @@ interface NewsCardProps {
 const useStyles = makeStyles((theme) => ({
   card: {
     overflow: 'visible',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '250px',
+    },
   },
   media: {
     height: 200,
@@ -45,7 +48,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
   const classes = useStyles();
 
   return (
-    <Box marginTop={3}>
+    <Box marginTop={3} marginX={3}>
       <Card elevation={0} className={classes.card}>
         {news ? (
           <CardMedia

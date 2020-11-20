@@ -23,6 +23,7 @@ export interface CompanyTable {
 interface HomepageTableProps {
   companies: CompanyTable[];
   status: QueryStatus;
+  title: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomepageTable: React.FC<HomepageTableProps> = ({ companies, status }) => {
+const HomepageTable: React.FC<HomepageTableProps> = ({
+  companies,
+  status,
+  title,
+}) => {
   const classes = useStyles();
 
   if (status === 'loading') {
@@ -65,7 +70,7 @@ const HomepageTable: React.FC<HomepageTableProps> = ({ companies, status }) => {
   return (
     <TableContainer component={Paper} variant="outlined">
       <Toolbar>
-        <Typography variant="h6">Most Active</Typography>
+        <Typography variant="h6">{title}</Typography>
       </Toolbar>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>

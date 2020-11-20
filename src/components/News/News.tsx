@@ -4,11 +4,13 @@ import { useQuery } from 'react-query';
 import { finnhub } from '../../../axiosInstance';
 import NewsCard from './NewsCard';
 
+import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 export interface News {
   id: number;
@@ -22,12 +24,18 @@ export interface News {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: '2em',
     maxHeight: '88vh',
     overflow: 'auto',
   },
   button: {
     overflowAnchor: 'none',
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(5),
+    },
+  },
+  toolbar: {
+    position: 'sticky',
+    left: '0',
   },
 }));
 
@@ -36,17 +44,22 @@ const newsFetcher = async () => {
   return data;
 };
 
+const NEWS_INCREMENT: number = 15;
+
 const News = () => {
   const classes = useStyles();
-  const [newsAmount, setNewsAmount] = useState<number>(15);
+  const theme = useTheme();
+  const mediaMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [newsAmount, setNewsAmount] = useState<number>(NEWS_INCREMENT);
 
   const { status, data, error } = useQuery('news', newsFetcher);
 
-  const loadMoreNews = () => setNewsAmount((prev) => prev + 15);
+  const loadMoreNews = () => setNewsAmount((prev) => prev + NEWS_INCREMENT);
 
   if (status === 'loading') {
     return (
-      <Box>
+      <Box width="100%">
         <Paper className={classes.paper} variant="outlined">
           <Typography variant="h5">Latest market news</Typography>
           {new Array(3).fill(undefined).map((_: undefined, index: number) => {
@@ -71,28 +84,32 @@ const News = () => {
   return (
     <Box>
       <Paper className={classes.paper} variant="outlined">
-        <Typography variant="h5">Latest market news</Typography>
-        {data
-          .filter((item: any, index: number) => index < newsAmount)
-          .map((news: News) => {
-            return <NewsCard news={news} key={news.id} />;
-          })}
-        <Box marginTop={3} textAlign="center">
-          {newsAmount < data.length ? (
-            <Button
-              fullWidth
-              color="primary"
-              variant="contained"
-              onClick={loadMoreNews}
-              className={classes.button}
-            >
-              Load more
-            </Button>
-          ) : (
-            <Typography variant="overline" color="primary">
-              No more posts to show
-            </Typography>
-          )}
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h5">Latest market news</Typography>
+        </Toolbar>
+        <Box display={mediaMd ? 'flex' : 'block'}>
+          {data
+            .filter((item: any, index: number) => index < newsAmount)
+            .map((news: News) => {
+              return <NewsCard news={news} key={news.id} />;
+            })}
+          <Box padding={3} textAlign="center" alignSelf="center">
+            {newsAmount < data.length ? (
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={loadMoreNews}
+                className={classes.button}
+              >
+                Load more
+              </Button>
+            ) : (
+              <Typography variant="overline" color="primary">
+                No more posts to show
+              </Typography>
+            )}
+          </Box>
         </Box>
       </Paper>
     </Box>

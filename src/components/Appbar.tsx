@@ -72,7 +72,7 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appbar}>
+      <AppBar position="fixed" className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             Stocks
@@ -91,6 +91,7 @@ export default function SearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   );
 }
