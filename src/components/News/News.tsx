@@ -61,10 +61,14 @@ const News = () => {
     return (
       <Box width="100%">
         <Paper className={classes.paper} variant="outlined">
-          <Typography variant="h5">Latest market news</Typography>
-          {new Array(3).fill(undefined).map((_: undefined, index: number) => {
-            return <NewsCard news={undefined} key={index} />;
-          })}
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h5">Latest market news</Typography>
+          </Toolbar>
+          <Box display={mediaMd ? 'flex' : 'block'}>
+            {new Array(3).fill(undefined).map((_: undefined, index: number) => {
+              return <NewsCard news={undefined} key={index} />;
+            })}
+          </Box>
         </Paper>
       </Box>
     );
@@ -75,7 +79,9 @@ const News = () => {
     return (
       <Box>
         <Paper className={classes.paper} variant="outlined">
-          <Typography variant="h5">Something went wrong...</Typography>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h5">Something went wrong...</Typography>
+          </Toolbar>
         </Paper>
       </Box>
     );

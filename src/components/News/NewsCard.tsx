@@ -48,7 +48,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
   const classes = useStyles();
 
   return (
-    <Box marginTop={3} marginX={3}>
+    <Box marginY={3} marginX={3}>
       <Card elevation={0} className={classes.card}>
         {news ? (
           <CardMedia

@@ -70,7 +70,7 @@ const HomepageTable: React.FC<HomepageTableProps> = ({
   return (
     <TableContainer component={Paper} variant="outlined">
       <Toolbar>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h5">{title}</Typography>
       </Toolbar>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>

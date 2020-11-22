@@ -31,14 +31,25 @@ const IpoCalendar = () => {
     fetcher
   );
 
-  console.log(data);
-
-  if (status === 'loading') return null;
+  if (status === 'loading') {
+    return (
+      <Paper variant="outlined">
+        <Toolbar>
+          <Typography variant="h5">Recent IPO</Typography>
+        </Toolbar>
+        <Box padding={3} paddingTop={0}>
+          {new Array(3).fill(undefined).map((_: undefined, index: number) => {
+            return <IpoCard ipo={undefined} key={index} />;
+          })}
+        </Box>
+      </Paper>
+    );
+  }
 
   return (
     <Paper variant="outlined">
       <Toolbar>
-        <Typography variant="h6">Recent IPO</Typography>
+        <Typography variant="h5">Recent IPO</Typography>
       </Toolbar>
       <Box padding={3} paddingTop={0}>
         {data.ipoCalendar.map((ipo: any) => {
