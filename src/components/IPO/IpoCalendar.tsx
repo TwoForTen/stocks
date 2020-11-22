@@ -53,7 +53,7 @@ const IpoCalendar = () => {
       </Toolbar>
       <Box padding={3} paddingTop={0}>
         {data.ipoCalendar.map((ipo: any) => {
-          return <IpoCard ipo={ipo} key={ipo.symbol} />;
+          return <IpoCard ipo={ipo} key={ipo.name} />;
         })}
       </Box>
     </Paper>

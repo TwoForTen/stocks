@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import { useQuery } from 'react-query';
 import { iex } from '../axiosInstance';
+import { useEffect } from 'react';
 
 import HomepageTable from '../src/components/HomepageTable';
 import News from '../src/components/News/News';
@@ -8,6 +9,7 @@ import IpoCalendar from '../src/components/IPO/IpoCalendar';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import io from 'socket.io-client';
 
 const fetcher = async () => {
   const getMostActive = () =>
@@ -26,7 +28,14 @@ const fetcher = async () => {
 };
 
 const Home: NextPage = () => {
+  const socket = io('http://localhost:3000');
   const { status, data } = useQuery('homepage', fetcher);
+
+  useEffect(() => {
+    socket.on('hello', (msg: string) => {
+      console.log(msg);
+    });
+  }, []);
 
   return (
     <Box paddingY={3}>
