@@ -11,27 +11,22 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const socket = new WebSocket('wss://ws.finnhub.io?token=buqgi8v48v6qdskvns3g');
+
 app.prepare().then(() => {
   const server = createServer((req, res) => {
     const parsedUrl = parse(req.url!, true)
     handle(req, res, parsedUrl)
   }).listen(port)
 
-  const socket = new WebSocket('wss://ws.finnhub.io?token=buqgi8v48v6qdskvns3g');
+  
   const io = socketio(server)
-
-  socket.setMaxListeners(2);
-
-  const subscribedSymbols: string[] = [];
+  let subscribedSymbol: string = '';
 
   const unsubscribe = () => {
-    if(subscribedSymbols.length > 0)
-      console.log(subscribedSymbols)
-      for(let i=0;i < subscribedSymbols.length;i++){
-        socket.send(JSON.stringify({'type':'unsubscribe','symbol': subscribedSymbols[i]}))
-        subscribedSymbols.shift();
-    }
-}
+    socket.send(JSON.stringify({'type':'unsubscribe','symbol': subscribedSymbol}))
+    subscribedSymbol = '';
+  }
 
   // Connection opened -> Subscribe
   socket.addEventListener('open', (event: any) => {
@@ -39,7 +34,7 @@ app.prepare().then(() => {
       ioSocket.on('subscribe', (msg: string) => {
         if(msg) {
           socket.send(JSON.stringify({'type':'subscribe', 'symbol': msg.toUpperCase()}))
-          subscribedSymbols.push(msg.toUpperCase());
+          subscribedSymbol = msg.toUpperCase();
         }
       })
 

@@ -1,4 +1,9 @@
+import { useState, useCallback, useEffect } from 'react';
+import { debounce } from 'lodash';
+import { useRouter } from 'next/router';
+
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
@@ -9,6 +14,9 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import { alphavantage } from '../../axiosInstance';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,25 +58,37 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputRoot: {
       color: 'inherit',
+      width: '100%',
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         width: '14em',
-        '&:focus': {
-          width: '24em',
-        },
       },
     },
   })
 );
 
-export default function SearchAppBar() {
+const Appbar = () => {
   const classes = useStyles();
+  const router = useRouter();
+
+  const [results, setResults] = useState([]);
+
+  const searchStock = useCallback(
+    debounce(
+      (query: string) =>
+        query !== '' &&
+        alphavantage
+          .get(`/query?function=SYMBOL_SEARCH&keywords=${query}`)
+          .then(({ data }) => setResults(data.bestMatches)),
+      400
+    ),
+    []
+  );
 
   return (
     <div className={classes.root}>
@@ -81,12 +101,48 @@ export default function SearchAppBar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search for stocks.."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
+            <Autocomplete
+              options={results}
+              getOptionSelected={(option, value) =>
+                option['2. name'] === value['2. name']
+              }
+              getOptionLabel={(option) => option['2. name'] || ''}
+              autoHighlight
+              onInputChange={(_, value) => searchStock(value)}
+              fullWidth
+              clearOnBlur
+              noOptionsText={
+                <Typography variant="subtitle1" color="textSecondary">
+                  Start typing..
+                </Typography>
+              }
+              onChange={(event, value, reason) => {
+                if (reason === 'select-option' && value) {
+                  // @ts-expect-error
+                  router.push('/[company]', `/${value['1. symbol']}`);
+                }
               }}
+              filterOptions={(options) => options}
+              renderOption={(option) => (
+                <Box>
+                  <Typography variant="h6">{option['1. symbol']}</Typography>
+                  <Typography variant="overline">
+                    {option['2. name']}
+                  </Typography>
+                </Box>
+              )}
+              renderInput={(params) => (
+                <div ref={params.InputProps.ref} style={{ width: '100%' }}>
+                  <InputBase
+                    {...params.inputProps}
+                    placeholder="Search for stocks.."
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </div>
+              )}
             />
           </div>
         </Toolbar>
@@ -94,4 +150,6 @@ export default function SearchAppBar() {
       <Toolbar />
     </div>
   );
-}
+};
+
+export default Appbar;

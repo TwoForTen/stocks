@@ -52,7 +52,7 @@ const CompanyPage: NextPage = () => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [wsData, setWsData] = useState<any>();
+  const [wsData, setWsData] = useState<any>([]);
 
   const { status, data } = useQuery([company], fetcher, {
     refetchOnWindowFocus: false,
@@ -84,6 +84,8 @@ const CompanyPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    socket.emit('unsubscribe');
+    setWsData([]);
     if (company) socket.emit('subscribe', company);
   }, [company]);
 

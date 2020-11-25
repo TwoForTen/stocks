@@ -13,3 +13,10 @@ export const finnhub = axios.create({
         token: 'buqgi8v48v6qdskvns3g'
     }
 })
+
+export const alphavantage = axios.create({
+    baseURL: 'https://www.alphavantage.co',
+    params: {
+        apikey: 'ZVB3LQ9SFLDYN3LM'
+    }
+})
