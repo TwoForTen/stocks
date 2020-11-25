@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 
 import { News } from './News';
+import Category from '../Category';
 
 interface NewsCardProps {
   news: News | undefined;
@@ -29,11 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     padding: `${theme.spacing(2)}px 0`,
-  },
-  category: {
-    textTransform: 'capitalize',
-    padding: '0 5px',
-    boxShadow: '0px 4px 9px rgba(180,90,255, 0.35)',
   },
   link: {
     textDecoration: 'none',
@@ -62,12 +58,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
         <CardContent className={classes.content}>
           <Box marginBottom={1}>
             {news ? (
-              <Chip
-                color="primary"
-                className={classes.category}
-                label={news.category}
-                size="small"
-              />
+              <Category label={news.category} />
             ) : (
               <Skeleton animation="wave" height={25} width="15%" />
             )}

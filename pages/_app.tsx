@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { NextComponentType } from 'next';
 
@@ -39,7 +40,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <Appbar />
           <Container maxWidth="xl">
-            <Component {...pageProps} />
+            <Box paddingY={3}>
+              <Component {...pageProps} />
+            </Box>
           </Container>
         </ThemeProvider>
       </SocketProvider>

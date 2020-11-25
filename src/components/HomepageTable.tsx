@@ -1,4 +1,5 @@
 import { QueryStatus } from 'react-query';
+import Link from 'next/link';
 
 import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -93,9 +94,13 @@ const HomepageTable: React.FC<HomepageTableProps> = ({
                 </Avatar>
               </TableCell>
               <TableCell>
-                <Typography variant="subtitle1" className={classes.name}>
-                  {company.companyName}
-                </Typography>
+                <Link href="/[company]" as={`/${company.symbol}`}>
+                  <a>
+                    <Typography variant="subtitle1" className={classes.name}>
+                      {company.companyName}
+                    </Typography>
+                  </a>
+                </Link>
               </TableCell>
               <TableCell>
                 <Typography variant="subtitle1">

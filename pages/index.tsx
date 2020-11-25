@@ -30,41 +30,39 @@ const Home: NextPage = () => {
   const { status, data } = useQuery('homepage', fetcher);
 
   return (
-    <Box paddingY={3}>
-      <Grid container spacing={3} alignItems="flex-start">
-        <Grid container item xs={12} lg={9} spacing={3}>
-          <Grid item xs={12}>
-            <HomepageTable
-              companies={data?.mostActive.data}
-              status={status}
-              title="Most Active"
-            />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <HomepageTable
-              companies={data?.gainers.data}
-              status={status}
-              title="Top Gainers"
-            />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <HomepageTable
-              companies={data?.losers.data}
-              status={status}
-              title="Top Losers"
-            />
-          </Grid>
+    <Grid container spacing={3} alignItems="flex-start">
+      <Grid container item xs={12} lg={9} spacing={3}>
+        <Grid item xs={12}>
+          <HomepageTable
+            companies={data?.mostActive.data}
+            status={status}
+            title="Most Active"
+          />
         </Grid>
-        <Grid container item xs={12} lg={3} spacing={3}>
-          <Grid item xs={12}>
-            <News />
-          </Grid>
-          <Grid item xs={12}>
-            <IpoCalendar />
-          </Grid>
+        <Grid item xs={12} lg={6}>
+          <HomepageTable
+            companies={data?.gainers.data}
+            status={status}
+            title="Top Gainers"
+          />
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <HomepageTable
+            companies={data?.losers.data}
+            status={status}
+            title="Top Losers"
+          />
         </Grid>
       </Grid>
-    </Box>
+      <Grid container item xs={12} lg={3} spacing={3}>
+        <Grid item xs={12}>
+          <News />
+        </Grid>
+        <Grid item xs={12}>
+          <IpoCalendar />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
