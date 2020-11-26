@@ -1,7 +1,6 @@
 import { createServer } from 'http'
 import { parse } from 'url'
 import next from 'next'
-import { throttle } from 'lodash'
 const WebSocket = require('ws');
 const socketio = require('socket.io');
 

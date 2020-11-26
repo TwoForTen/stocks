@@ -4,10 +4,9 @@ import { iex } from '../axiosInstance';
 import { useEffect } from 'react';
 
 import HomepageTable from '../src/components/HomepageTable';
-import News from '../src/components/News/News';
-import IpoCalendar from '../src/components/IPO/IpoCalendar';
+import News from '../src/components/news/News';
+import IpoCalendar from '../src/components/ipo/IpoCalendar';
 
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
 const fetcher = async () => {

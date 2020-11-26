@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
@@ -94,10 +93,11 @@ const Appbar: React.FC<AppbarProps> = ({ darkTheme, setDarkTheme }) => {
   const searchStock = useCallback(
     debounce(
       (query: string) =>
-        query !== '' &&
-        alphavantage
-          .get(`/query?function=SYMBOL_SEARCH&keywords=${query}`)
-          .then(({ data }) => setResults(data.bestMatches)),
+        query !== ''
+          ? alphavantage
+              .get(`/query?function=SYMBOL_SEARCH&keywords=${query}`)
+              .then(({ data }) => setResults(data.bestMatches))
+          : setResults([]),
       THROTTLE_TIME
     ),
     []
