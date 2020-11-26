@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { QueryStatus } from 'react-query';
+import { AxiosResponse } from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -21,7 +22,14 @@ import percentageCalculator from '../../utils/percentageCalculator';
 
 interface TopBarProps {
   wsData: any;
-  data: any;
+  data:
+    | {
+        companyInfo: AxiosResponse<any>;
+        stats: AxiosResponse<any>;
+        quote: AxiosResponse<any>;
+        chartData: AxiosResponse<any>;
+      }
+    | undefined;
   status: QueryStatus;
 }
 

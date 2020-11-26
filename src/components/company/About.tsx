@@ -15,6 +15,7 @@ interface StatsProps {
         companyInfo: AxiosResponse<any>;
         stats: AxiosResponse<any>;
         quote: AxiosResponse<any>;
+        chartData: AxiosResponse<any>;
       }
     | undefined;
   status: QueryStatus;
