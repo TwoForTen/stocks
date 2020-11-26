@@ -15,8 +15,16 @@ import {
 } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 import { alphavantage } from '../../axiosInstance';
+
+interface AppbarProps {
+  darkTheme: boolean;
+  setDarkTheme: () => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,10 +77,15 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '14em',
       },
     },
+    darkModeSwitch: {
+      marginLeft: 'auto',
+    },
   })
 );
 
-const Appbar = () => {
+const THROTTLE_TIME: number = 400;
+
+const Appbar: React.FC<AppbarProps> = ({ darkTheme, setDarkTheme }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -85,7 +98,7 @@ const Appbar = () => {
         alphavantage
           .get(`/query?function=SYMBOL_SEARCH&keywords=${query}`)
           .then(({ data }) => setResults(data.bestMatches)),
-      400
+      THROTTLE_TIME
     ),
     []
   );
@@ -145,6 +158,17 @@ const Appbar = () => {
               )}
             />
           </div>
+          <FormControlLabel
+            className={classes.darkModeSwitch}
+            control={
+              <Switch
+                checked={darkTheme}
+                onChange={setDarkTheme}
+                color="default"
+              />
+            }
+            label="Dark Mode"
+          />
         </Toolbar>
       </AppBar>
       <Toolbar />

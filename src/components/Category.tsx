@@ -6,6 +6,7 @@ const useStyles = makeStyles({
     textTransform: 'capitalize',
     padding: '0 5px',
     boxShadow: '0px 4px 9px rgba(180,90,255, 0.35)',
+    minWidth: '60px',
   },
 });
 
