@@ -3,7 +3,7 @@ import axios from 'axios';
 export const iex = axios.create({
     baseURL: 'https://cloud.iexapis.com/stable',
     params: {
-        token: 'pk_3b947a81cbae4bf58d17ac59be367efd'
+        token: 'pk_3350dd0971354fd69ce516d892c2693d'
     }
 })
 

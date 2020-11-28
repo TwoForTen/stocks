@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { QueryStatus } from 'react-query';
 import { AxiosResponse } from 'axios';
+import { includes } from 'lodash';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -14,10 +15,11 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import Favorite from '@material-ui/icons/GradeOutlined';
+import FavoriteOutlined from '@material-ui/icons/GradeOutlined';
+import FavoriteFilled from '@material-ui/icons/Grade';
 
 import Category from '../Category';
-
+import useLocalStorage from '../../hooks/useLocalStorage';
 import percentageCalculator from '../../utils/percentageCalculator';
 
 interface TopBarProps {
@@ -47,6 +49,7 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
   const theme = useTheme();
   const router = useRouter();
   const classes = useStyles();
+  const [favorites, setFavorites] = useLocalStorage('favorites', []);
 
   const percentage = useCallback(
     () =>
@@ -159,13 +162,38 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
               </Box>
             </Box>
             <Box paddingX={3}>
-              <Button
-                color="primary"
-                variant="outlined"
-                startIcon={<Favorite />}
-              >
-                Add to Favorites
-              </Button>
+              {!includes(favorites, data?.companyInfo.data.ticker) ? (
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  startIcon={<FavoriteOutlined />}
+                  onClick={() =>
+                    setFavorites((prev: string[]) => [
+                      ...prev,
+                      data?.companyInfo.data.ticker,
+                    ])
+                  }
+                >
+                  Add to Favorites
+                </Button>
+              ) : (
+                <Button
+                  color="primary"
+                  variant="contained"
+                  startIcon={<FavoriteFilled />}
+                  disableElevation
+                  onClick={() =>
+                    setFavorites((prev: string[]) =>
+                      prev.filter(
+                        (company: string) =>
+                          company !== data?.companyInfo.data.ticker
+                      )
+                    )
+                  }
+                >
+                  Remove from Favorites
+                </Button>
+              )}
             </Box>
           </Box>
         </Paper>

@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useQuery } from 'react-query';
 import { iex } from '../axiosInstance';
-import { useEffect } from 'react';
 
 import HomepageTable from '../src/components/HomepageTable';
 import News from '../src/components/news/News';
