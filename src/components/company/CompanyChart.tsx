@@ -41,7 +41,7 @@ const CompanyChart: React.FC<CompanyChartProps> = ({ data, status }) => {
   }, [data?.chartData]);
 
   return (
-    <Box minHeight="300px">
+    <Box minHeight="300px" maxHeight="100%" height="100%">
       <Line
         data={chartData}
         options={{
