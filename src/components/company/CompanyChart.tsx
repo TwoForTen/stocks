@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useTheme } from '@material-ui/core/styles';
 import { Line } from 'react-chartjs-2';
 import { AxiosResponse } from 'axios';
 import { QueryStatus } from 'react-query';
+
+import Box from '@material-ui/core/Box';
+import { useTheme } from '@material-ui/core/styles';
 
 interface CompanyChartProps {
   data:
@@ -39,53 +41,57 @@ const CompanyChart: React.FC<CompanyChartProps> = ({ data, status }) => {
   }, [data?.chartData]);
 
   return (
-    <Line
-      data={chartData}
-      options={{
-        title: {
-          display: true,
-          text: '1 Month',
-        },
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 5,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              position: 'right',
-              gridLines: {
-                drawBorder: false,
-              },
-            },
-          ],
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: { display: false },
-        tooltips: {
-          mode: 'index',
-          intersect: false,
-          custom: (tooltip) => {
-            if (!tooltip) return;
-            tooltip.displayColors = false;
+    <Box minHeight="300px">
+      <Line
+        data={chartData}
+        options={{
+          title: {
+            display: true,
+            text: '1 Month',
           },
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true,
-        },
-        elements: {
-          point: {
-            radius: 0,
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 5,
+                  // minRotation: 90,
+                  maxRotation: 90,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                position: 'right',
+                gridLines: {
+                  drawBorder: false,
+                },
+              },
+            ],
           },
-        },
-      }}
-    />
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: { display: false },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+            custom: (tooltip) => {
+              if (!tooltip) return;
+              tooltip.displayColors = false;
+            },
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true,
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+        }}
+      />
+    </Box>
   );
 };
 
