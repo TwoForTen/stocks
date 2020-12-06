@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { QueryStatus } from 'react-query';
 import { AxiosResponse } from 'axios';
-import { includes } from 'lodash';
+import { includes, isEmpty } from 'lodash';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import FavoriteOutlined from '@material-ui/icons/GradeOutlined';
@@ -50,6 +51,7 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
   const router = useRouter();
   const classes = useStyles();
   const [favorites, setFavorites] = useLocalStorage('favorites', []);
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
 
   const percentage = useCallback(
     () =>
@@ -74,7 +76,12 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
             justifyContent="space-between"
             flexWrap="wrap"
           >
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              alignItems="center"
+              flexWrap="wrap
+           "
+            >
               <Box marginRight={1}>
                 <IconButton onClick={() => router.push('/')}>
                   <ArrowBack fontSize="large" />
@@ -86,7 +93,7 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
                 className={classes.avatar}
                 variant="rounded"
               />
-              <Box marginX={3}>
+              <Box marginX={3} marginTop={!sm ? 0 : 2}>
                 <Box marginBottom={1}>
                   {status !== 'loading' ? (
                     <Category label={data?.companyInfo.data.finnhubIndustry} />
@@ -161,40 +168,42 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
                 </Box>
               </Box>
             </Box>
-            <Box paddingX={3}>
-              {!includes(favorites, data?.companyInfo.data.ticker) ? (
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  startIcon={<FavoriteOutlined />}
-                  onClick={() =>
-                    setFavorites((prev: string[]) => [
-                      ...prev,
-                      data?.companyInfo.data.ticker,
-                    ])
-                  }
-                >
-                  Add to Favorites
-                </Button>
-              ) : (
-                <Button
-                  color="primary"
-                  variant="contained"
-                  startIcon={<FavoriteFilled />}
-                  disableElevation
-                  onClick={() =>
-                    setFavorites((prev: string[]) =>
-                      prev.filter(
-                        (company: string) =>
-                          company !== data?.companyInfo.data.ticker
+            {!isEmpty(data?.companyInfo.data) && (
+              <Box paddingX={3}>
+                {!includes(favorites, data?.companyInfo.data.ticker) ? (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    startIcon={<FavoriteOutlined />}
+                    onClick={() =>
+                      setFavorites((prev: string[]) => [
+                        ...prev,
+                        data?.companyInfo.data.ticker,
+                      ])
+                    }
+                  >
+                    Add to Favorites
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    startIcon={<FavoriteFilled />}
+                    disableElevation
+                    onClick={() =>
+                      setFavorites((prev: string[]) =>
+                        prev.filter(
+                          (company: string) =>
+                            company !== data?.companyInfo.data.ticker
+                        )
                       )
-                    )
-                  }
-                >
-                  Remove from Favorites
-                </Button>
-              )}
-            </Box>
+                    }
+                  >
+                    Remove from Favorites
+                  </Button>
+                )}
+              </Box>
+            )}
           </Box>
         </Paper>
       </Grid>

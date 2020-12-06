@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
     gap: theme.spacing(1.5),
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   },
 }));
 

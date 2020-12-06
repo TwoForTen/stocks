@@ -85,51 +85,50 @@ const HomepageTable: React.FC<HomepageTableProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {companies &&
-            companies.map((company: any) => (
-              <TableRow key={company.symbol} hover>
-                <TableCell component="th" scope="row">
-                  <Avatar className={classes.avatar} variant="rounded">
-                    <Typography className={classes.symbol} variant="button">
-                      {company.symbol}
+          {companies.map((company: any) => (
+            <TableRow key={company.symbol} hover>
+              <TableCell component="th" scope="row">
+                <Avatar className={classes.avatar} variant="rounded">
+                  <Typography className={classes.symbol} variant="button">
+                    {company.symbol}
+                  </Typography>
+                </Avatar>
+              </TableCell>
+              <TableCell>
+                <Link href="/[company]" as={`/${company.symbol}`}>
+                  <a>
+                    <Typography variant="subtitle1" className={classes.name}>
+                      {company.companyName}
                     </Typography>
-                  </Avatar>
-                </TableCell>
-                <TableCell>
-                  <Link href="/[company]" as={`/${company.symbol}`}>
-                    <a>
-                      <Typography variant="subtitle1" className={classes.name}>
-                        {company.companyName}
-                      </Typography>
-                    </a>
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle1">
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    }).format(company.latestPrice)}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle1" className={classes.high}>
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    }).format(company.week52High)}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle1" className={classes.low}>
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    }).format(company.week52Low)}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </a>
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1">
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(company.latestPrice)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" className={classes.high}>
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(company.week52High)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" className={classes.low}>
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(company.week52Low)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

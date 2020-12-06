@@ -20,6 +20,9 @@ interface FavoriteCardProps {
 }
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    marginBottom: theme.spacing(1),
+  },
   avatar: {
     height: theme.spacing(8),
     width: theme.spacing(8),
@@ -44,7 +47,7 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ data }) => {
   );
 
   return (
-    <Paper>
+    <Paper className={classes.container}>
       <Box
         paddingY={3}
         paddingX={3}
@@ -53,14 +56,14 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ data }) => {
         justifyContent="space-between"
         flexWrap="wrap"
       >
-        <Box display="flex" alignItems="center">
+        <Box display="flex" flexWrap="wrap" flexDirection="column">
           <Avatar
             src={data?.favCompanies.data.logo}
             alt="Company Image"
             className={classes.avatar}
             variant="rounded"
           />
-          <Box marginX={3}>
+          <Box marginTop={2}>
             <Box display="flex" alignItems="baseline">
               <Link href="/[company]" as={`/${data?.favCompanies.data.ticker}`}>
                 <a>
