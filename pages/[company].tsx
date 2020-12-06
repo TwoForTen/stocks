@@ -84,7 +84,7 @@ const CompanyPage: NextPage = () => {
                     <Stats data={data} status={status} />
                   </Grid>
                   <Grid item md={7} xs={12}>
-                    <CompanyChart data={data} status={status} />
+                    <CompanyChart data={data} />
                   </Grid>
                 </Grid>
               </Box>

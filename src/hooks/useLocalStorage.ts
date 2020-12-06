@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-const useLocalStorage = (key: string, initialValue: any) => {
+export type StorageKey = 'favorites' | 'theme';
+
+const useLocalStorage = (key: StorageKey, initialValue: any) => {
   const IS_BROWSER = typeof window !== 'undefined';
 
   const [value, setValue] = useState<typeof initialValue>(() => {

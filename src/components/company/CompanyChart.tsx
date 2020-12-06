@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { AxiosResponse } from 'axios';
-import { QueryStatus } from 'react-query';
 
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
@@ -15,10 +14,9 @@ interface CompanyChartProps {
         chartData: AxiosResponse<any>;
       }
     | undefined;
-  status: QueryStatus;
 }
 
-const CompanyChart: React.FC<CompanyChartProps> = ({ data, status }) => {
+const CompanyChart: React.FC<CompanyChartProps> = ({ data }) => {
   const theme = useTheme();
   const [chartData, setChartData] = useState<any>({});
 
@@ -48,6 +46,7 @@ const CompanyChart: React.FC<CompanyChartProps> = ({ data, status }) => {
           title: {
             display: true,
             text: '1 Month',
+            fontColor: theme.palette.text.secondary,
           },
           scales: {
             xAxes: [
@@ -57,11 +56,15 @@ const CompanyChart: React.FC<CompanyChartProps> = ({ data, status }) => {
                   maxTicksLimit: 5,
                   // minRotation: 90,
                   maxRotation: 90,
+                  fontColor: theme.palette.text.secondary,
                 },
               },
             ],
             yAxes: [
               {
+                ticks: {
+                  fontColor: theme.palette.text.secondary,
+                },
                 position: 'right',
                 gridLines: {
                   drawBorder: false,
