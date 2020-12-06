@@ -4,7 +4,6 @@ import { QueryStatus } from 'react-query';
 
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Skeleton from '@material-ui/lab/Skeleton';

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { throttle } from 'lodash';
@@ -6,7 +6,6 @@ import { useQuery } from 'react-query';
 import { finnhub, alphavantage, iex } from '../axiosInstance';
 
 import Box from '@material-ui/core/Box';
-// import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -72,7 +71,6 @@ const CompanyPage: NextPage = () => {
   return (
     <>
       <TopBar wsData={wsData} data={data} status={status} />
-      {/* <Container maxWidth="lg" style={{ padding: 0 }}> */}
       <Box marginY={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={9}>
@@ -97,7 +95,6 @@ const CompanyPage: NextPage = () => {
           </Grid>
         </Grid>
       </Box>
-      {/* </Container> */}
     </>
   );
 };

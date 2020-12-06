@@ -1,6 +1,5 @@
 import { QueryStatus } from 'react-query';
 import Link from 'next/link';
-import { isEmpty } from 'lodash';
 
 import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';

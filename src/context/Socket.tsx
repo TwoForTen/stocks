@@ -5,7 +5,7 @@ interface SocketContextType {
   socket: typeof Socket;
 }
 
-export const SocketContext = createContext<SocketContextType>({ socket: io() });
+export const SocketContext = createContext({} as SocketContextType);
 
 const SocketProvider: React.FC = ({ children }) => {
   const socket = io('http://localhost:3001');
