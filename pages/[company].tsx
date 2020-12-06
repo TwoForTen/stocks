@@ -76,7 +76,7 @@ const CompanyPage: NextPage = () => {
       <Box marginY={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={9}>
-            <Paper variant="outlined">
+            <Paper>
               <Toolbar>
                 <Typography variant="h5">Overview</Typography>
               </Toolbar>

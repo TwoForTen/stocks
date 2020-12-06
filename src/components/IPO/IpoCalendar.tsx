@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { finnhub } from '../../../axiosInstance';
 import { format, subDays } from 'date-fns';
+import { isEmpty } from 'lodash';
 
 import IpoCard from './IpoCard';
 
@@ -33,7 +34,7 @@ const IpoCalendar = () => {
 
   if (status === 'loading') {
     return (
-      <Paper variant="outlined">
+      <Paper>
         <Toolbar>
           <Typography variant="h5">Recent IPO</Typography>
         </Toolbar>
@@ -46,8 +47,35 @@ const IpoCalendar = () => {
     );
   }
 
+  if (status === 'error') {
+    console.log(error);
+    return (
+      <Paper>
+        <Toolbar>
+          <Typography variant="h5">Recent IPO</Typography>
+        </Toolbar>
+        <Box padding={3} paddingTop={0}>
+          <Typography variant="body1">There was an error.</Typography>
+        </Box>
+      </Paper>
+    );
+  }
+
+  if (isEmpty(data.ipoCalendar)) {
+    return (
+      <Paper>
+        <Toolbar>
+          <Typography variant="h5">Recent IPO</Typography>
+        </Toolbar>
+        <Box padding={3} paddingTop={0}>
+          <Typography variant="body1">No recent IPO</Typography>
+        </Box>
+      </Paper>
+    );
+  }
+
   return (
-    <Paper variant="outlined">
+    <Paper>
       <Toolbar>
         <Typography variant="h5">Recent IPO</Typography>
       </Toolbar>

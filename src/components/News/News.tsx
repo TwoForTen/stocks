@@ -60,7 +60,7 @@ const News = () => {
   if (status === 'loading') {
     return (
       <Box width="100%">
-        <Paper className={classes.paper} variant="outlined">
+        <Paper className={classes.paper}>
           <Toolbar className={classes.toolbar}>
             <Typography variant="h5">Latest market news</Typography>
           </Toolbar>
@@ -78,7 +78,7 @@ const News = () => {
     console.log(error);
     return (
       <Box>
-        <Paper className={classes.paper} variant="outlined">
+        <Paper className={classes.paper}>
           <Toolbar className={classes.toolbar}>
             <Typography variant="h5">Something went wrong...</Typography>
           </Toolbar>
@@ -89,7 +89,7 @@ const News = () => {
 
   return (
     <Box>
-      <Paper className={classes.paper} variant="outlined">
+      <Paper className={classes.paper}>
         <Toolbar className={classes.toolbar}>
           <Typography variant="h5">Latest market news</Typography>
         </Toolbar>

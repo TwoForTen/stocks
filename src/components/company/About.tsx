@@ -23,7 +23,7 @@ interface StatsProps {
 
 const Stats: React.FC<StatsProps> = ({ data, status }) => {
   return (
-    <Paper variant="outlined">
+    <Paper>
       <Toolbar>
         <Typography variant="h5">About</Typography>
       </Toolbar>

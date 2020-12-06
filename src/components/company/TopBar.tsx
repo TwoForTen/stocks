@@ -65,7 +65,7 @@ const TopBar: React.FC<TopBarProps> = ({ wsData, data, status }) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Paper variant="outlined">
+        <Paper>
           <Box
             paddingY={3}
             paddingX={1}
